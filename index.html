@@ -21,6 +21,8 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-frame" aria-hidden="true"></div>
+    <canvas class="grain" aria-hidden="true"></canvas>
     <header class="site-header" data-header>
       <div class="container nav-wrap">
         <a class="brand" href="#top" aria-label="Bricks home">
@@ -47,7 +49,9 @@
     </header>
 
     <main id="main">
-      <section class="hero" id="top">
+      <section class="hero-track" id="top">
+        <div class="hero">
+        <div class="hero-canvas-full" data-hero-3d aria-hidden="true"></div>
         <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
         <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
         <div class="container hero-grid">
@@ -66,10 +70,8 @@
             </div>
           </div>
           <div class="hero-visual">
-            <div class="hero-stage" data-hero-3d>
-              <div class="hero-image-wrap hero-fallback">
-                <img src="assets/images/collaboration.png" alt="Bricks consultants collaborating with a client" width="768" height="538">
-              </div>
+            <div class="hero-image-wrap hero-fallback">
+              <img src="assets/images/collaboration.png" alt="Bricks consultants collaborating with a client" width="768" height="538">
             </div>
             <div class="floating-card floating-card-top tilt" data-tilt="14">
               <span class="pulse" aria-hidden="true"></span>
@@ -80,6 +82,8 @@
               <strong>Practical impact,<br>not AI theatre.</strong>
             </div>
           </div>
+        </div>
+        <div class="hero-cue" aria-hidden="true"><span></span></div>
         </div>
       </section>
 
@@ -98,14 +102,14 @@
       </section>
 
       <section class="section intro" id="expertise">
-        <div class="container section-heading split-heading">
+        <div class="container section-heading split-heading" data-reveal>
           <div>
             <p class="eyebrow eyebrow-dark"><span></span> Where we create value</p>
             <h2>From ambition to <em>measurable advantage.</em></h2>
           </div>
           <p>We focus on industries where operations, data and customer experience can unlock the greatest value.</p>
         </div>
-        <div class="container expertise-grid">
+        <div class="container expertise-grid" data-reveal-group>
           <article class="expertise-card expertise-card-featured tilt">
             <span class="card-number">01</span>
             <div class="card-icon" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -145,7 +149,7 @@
             <p>Transformation only matters when people use it and the business feels it. We work alongside your team from the first question to sustained adoption.</p>
             <a class="text-link light-link" href="#contact">Talk through your challenge <span aria-hidden="true">&#8594;</span></a>
           </div>
-          <ol class="approach-steps">
+          <ol class="approach-steps" data-reveal-group>
             <li><span>01</span><div><h3>Discover the opportunity</h3><p>We align on the business problem, map the data and find the highest-value moves.</p></div></li>
             <li><span>02</span><div><h3>Design the right solution</h3><p>We shape a practical roadmap, prototype quickly and prove value before scaling.</p></div></li>
             <li><span>03</span><div><h3>Deliver lasting capability</h3><p>We implement with your people, transfer knowledge and build momentum for what comes next.</p></div></li>
@@ -155,11 +159,11 @@
 
       <section class="section work" id="work">
         <div class="container">
-          <div class="section-heading split-heading">
+          <div class="section-heading split-heading" data-reveal>
             <div><p class="eyebrow eyebrow-dark"><span></span> Built for the real world</p><h2>Ideas grounded in <em>how business works.</em></h2></div>
             <p>Our experience spans customer-facing operations, high-consideration sales and complex service environments across Asia.</p>
           </div>
-          <div class="work-grid">
+          <div class="work-grid" data-reveal-group>
             <article class="work-card work-card-large tilt">
               <img src="assets/images/hospitality.png" alt="Contemporary hospitality space" width="768" height="538" loading="lazy">
               <div class="work-overlay"><p>Hospitality &amp; experience</p><h3>Connect every decision to the guest experience.</h3><span>Operations · Customer intelligence · Growth</span></div>
@@ -175,7 +179,7 @@
       <section class="principles" aria-labelledby="principles-title">
         <div class="container principles-grid">
           <div class="principles-title-wrap"><p class="eyebrow eyebrow-dark"><span></span> Our principles</p><h2 id="principles-title">Clear thinking.<br><em>Useful outcomes.</em></h2></div>
-          <div class="principle-list">
+          <div class="principle-list" data-reveal-group>
             <article><span>01</span><h3>Innovation with intent</h3><p>We start with the business outcome, then apply the technology that best serves it.</p></article>
             <article><span>02</span><h3>Evidence over instinct</h3><p>We use data, testing and practical feedback to move from assumptions to confident action.</p></article>
             <article><span>03</span><h3>Partnership by design</h3><p>We build with your team, not around them, so new capabilities live on inside the business.</p></article>
@@ -199,7 +203,7 @@
       </section>
 
       <section class="section about" id="about">
-        <div class="container about-grid">
+        <div class="container about-grid" data-reveal-group>
           <div class="about-image"><img src="assets/images/collaboration.png" alt="Consultants working together in conversation" width="768" height="538" loading="lazy"><div class="about-badge"><strong>Bricks</strong><span>Singapore · APAC</span></div></div>
           <div class="about-copy">
             <p class="eyebrow eyebrow-dark"><span></span> About Bricks</p><h2>A small team with a <em>wide-angle view.</em></h2>
@@ -237,6 +241,7 @@
       <div class="container footer-bottom"><p>© <span id="year">2026</span> Bricks Marketing LLP</p><a href="mailto:hi@bricksmarketing.com">hi@bricksmarketing.com</a><a href="#top">Back to top <span aria-hidden="true">&#8593;</span></a></div>
     </footer>
     <script src="script.js" defer></script>
+    <script src="effects.js" defer></script>
     <script src="scene3d.js" type="module"></script>
   </body>
 </html>

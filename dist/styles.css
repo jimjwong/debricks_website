@@ -288,3 +288,120 @@ h1 em, h2 em { color: var(--blue); font-family: Georgia, "Times New Roman", seri
 @media (prefers-reduced-motion: reduce) {
   .tilt, .tilt.is-tilting { transform: none !important; transition: none; }
 }
+
+/* ==========================================================================
+   Atmosphere & scroll cinematics
+   ========================================================================== */
+
+/* ---- Fixed editorial frame ---- */
+.page-frame {
+  position: fixed;
+  inset: 10px;
+  z-index: 60;
+  border: 1px solid rgba(24, 35, 74, .13);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* ---- Film grain ---- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  width: 100%;
+  height: 100%;
+  opacity: .055;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ---- Pinned hero: the track scrolls, the hero stays put and the camera
+        dollies through the scene while it does. ---- */
+.hero-track { position: relative; height: 235vh; }
+.hero {
+  position: sticky;
+  top: 0;
+  display: grid;
+  align-items: center;
+  height: 100vh;
+  min-height: 620px;
+  padding: 96px 0 40px;
+  overflow: hidden;
+}
+
+/* Technical grid, under the 3D and over the gradient. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(to right, rgba(36, 51, 167, .055) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(to bottom, rgba(36, 51, 167, .055) 0 1px, transparent 1px 34px);
+  mask-image: radial-gradient(120% 90% at 70% 45%, #000 35%, transparent 78%);
+  pointer-events: none;
+}
+
+.hero-canvas-full { position: absolute; inset: 0; z-index: 1; }
+.hero-canvas-full canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 900ms ease; }
+.hero-canvas-full.is-live canvas { opacity: 1; }
+
+.hero-grid { z-index: 3; }
+/* With the scene full-bleed the right column is just an anchor for the cards. */
+.has-webgl-hero .hero-fallback { display: none; }
+.has-webgl-hero .hero-visual { min-height: 60vh; }
+
+/* Scroll cue */
+.hero-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  z-index: 4;
+  width: 24px;
+  height: 38px;
+  border: 1px solid rgba(24, 35, 74, .28);
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+.hero-cue span {
+  position: absolute;
+  left: 50%;
+  top: 9px;
+  width: 3px;
+  height: 7px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--blue);
+  animation: cue 1.9s ease-in-out infinite;
+}
+@keyframes cue {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  55% { transform: translateY(11px); opacity: .25; }
+}
+
+/* ---- Scroll reveals ---- */
+.will-reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 720ms cubic-bezier(.22, .61, .36, 1), transform 720ms cubic-bezier(.22, .61, .36, 1);
+}
+.is-revealed { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .will-reveal { opacity: 1; transform: none; transition: none; }
+  .hero-cue span { animation: none; }
+}
+
+/* ---- Below the pinning breakpoint the hero behaves like a normal block ---- */
+@media (max-width: 900px) {
+  .hero-track { height: auto; }
+  .hero {
+    position: relative;
+    height: auto;
+    min-height: auto;
+    padding: 145px 0 72px;
+  }
+  .has-webgl-hero .hero-visual { min-height: 0; }
+  .has-webgl-hero .hero-canvas-full { position: relative; height: 60vh; grid-area: unset; }
+  .hero-cue { display: none; }
+}

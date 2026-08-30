@@ -56,6 +56,7 @@ function init(mount) {
   renderer.domElement.setAttribute('aria-hidden', 'true');
   mount.appendChild(renderer.domElement);
   mount.classList.add('is-live');
+  document.documentElement.classList.add('has-webgl-hero');
 
   const scene = new Scene();
   const camera = new PerspectiveCamera(38, 1, 0.1, 100);
@@ -129,7 +130,7 @@ function init(mount) {
   }
 
   // Soft contact shadow so the tower feels grounded rather than pasted on.
-  const ground = new Mesh(new PlaneGeometry(26, 26), new ShadowMaterial({ opacity: 0.1 }));
+  const ground = new Mesh(new PlaneGeometry(26, 26), new ShadowMaterial({ opacity: 0.07 }));
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = -3.25;
   ground.receiveShadow = true;
@@ -150,10 +151,13 @@ function init(mount) {
 
   const onPointerLeave = () => targetPointer.set(0, 0);
 
+  const track = mount.closest('.hero-track') || mount.closest('.hero') || mount;
+
   const onScroll = () => {
-    const hero = mount.closest('.hero') || mount;
-    const rect = hero.getBoundingClientRect();
-    scrollProgress = MathUtils.clamp(-rect.top / Math.max(rect.height, 1), 0, 1);
+    const rect = track.getBoundingClientRect();
+    // 0 at the top of the track, 1 once the pinned section has scrolled through.
+    const travel = Math.max(rect.height - window.innerHeight, 1);
+    scrollProgress = MathUtils.clamp(-rect.top / travel, 0, 1);
   };
 
   if (!reduceMotion) {
@@ -164,14 +168,24 @@ function init(mount) {
   }
 
   // ---- Sizing ---------------------------------------------------------------
+  let dollyNear = 8.5;
+  let dollyFar = 15.5;
+
   const resize = () => {
     const width = mount.clientWidth;
     const height = mount.clientHeight;
     if (!width || !height) return;
+
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
-    // Pull the camera back on narrow viewports so the tower never crops.
-    camera.position.z = MathUtils.clamp(13.6 - camera.aspect * 2.2, 11.2, 15.4);
+
+    // Full-bleed canvas: offset the tower into the empty right-hand side so it
+    // never sits under the headline, and give narrow screens more distance.
+    const wide = width >= 900;
+    tower.position.x = wide ? MathUtils.clamp(camera.aspect * 1.9, 2.5, 4.4) : 0;
+    dollyFar = wide ? 15.5 : 17.5;
+    dollyNear = wide ? 8.5 : 11;
+
     camera.updateProjectionMatrix();
   };
 
@@ -192,9 +206,15 @@ function init(mount) {
 
     pointer.lerp(targetPointer, 0.055);
 
-    tower.rotation.y = elapsed * 0.16 + pointer.x * 0.42 + scrollProgress * 1.5;
-    tower.rotation.x = pointer.y * 0.16;
-    tower.position.y = -scrollProgress * 1.1;
+    // Ease the push-in so the start of the scroll feels unhurried.
+    const dolly = 1 - Math.pow(1 - scrollProgress, 2);
+    camera.position.z = MathUtils.lerp(dollyFar, dollyNear, dolly);
+    camera.position.y = MathUtils.lerp(1.4, 2.6, dolly) + pointer.y * 0.35;
+    camera.lookAt(tower.position.x * 0.12, 0.35 - dolly * 0.8, 0);
+
+    tower.rotation.y = elapsed * 0.16 + pointer.x * 0.42 + scrollProgress * 2.1;
+    tower.rotation.x = pointer.y * 0.1;
+    tower.position.y = -scrollProgress * 1.6;
 
     for (const brick of bricks) {
       brick.mesh.position.y = brick.baseY + Math.sin(elapsed * 0.85 + brick.phase) * brick.drift;
