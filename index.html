@@ -66,14 +66,16 @@
             </div>
           </div>
           <div class="hero-visual">
-            <div class="hero-image-wrap">
-              <img src="assets/images/collaboration.png" alt="Bricks consultants collaborating with a client" width="768" height="538">
+            <div class="hero-stage" data-hero-3d>
+              <div class="hero-image-wrap hero-fallback">
+                <img src="assets/images/collaboration.png" alt="Bricks consultants collaborating with a client" width="768" height="538">
+              </div>
             </div>
-            <div class="floating-card floating-card-top">
+            <div class="floating-card floating-card-top tilt" data-tilt="14">
               <span class="pulse" aria-hidden="true"></span>
               Built around your business
             </div>
-            <div class="floating-card floating-card-bottom">
+            <div class="floating-card floating-card-bottom tilt" data-tilt="14">
               <span class="mini-label">Our focus</span>
               <strong>Practical impact,<br>not AI theatre.</strong>
             </div>
@@ -104,28 +106,28 @@
           <p>We focus on industries where operations, data and customer experience can unlock the greatest value.</p>
         </div>
         <div class="container expertise-grid">
-          <article class="expertise-card expertise-card-featured">
+          <article class="expertise-card expertise-card-featured tilt">
             <span class="card-number">01</span>
             <div class="card-icon" aria-hidden="true"><span></span><span></span><span></span></div>
             <h3>F&amp;B &amp; Hospitality</h3>
             <p>AI operations, demand forecasting and menu intelligence that help teams serve smarter and waste less.</p>
             <ul><li>Menu &amp; margin analytics</li><li>Demand &amp; workforce planning</li><li>Customer experience design</li></ul>
           </article>
-          <article class="expertise-card">
+          <article class="expertise-card tilt">
             <span class="card-number">02</span>
             <div class="card-icon nodes" aria-hidden="true"><span></span><span></span><span></span></div>
             <h3>Retail &amp; E-commerce</h3>
             <p>Customer intelligence and connected commerce strategies that turn everyday interactions into growth.</p>
             <ul><li>Customer segmentation</li><li>Personalisation &amp; loyalty</li><li>Commercial analytics</li></ul>
           </article>
-          <article class="expertise-card">
+          <article class="expertise-card tilt">
             <span class="card-number">03</span>
             <div class="card-icon bars" aria-hidden="true"><span></span><span></span><span></span></div>
             <h3>Financial Services</h3>
             <p>Responsible automation and decision support that sharpen advisory, service and operational workflows.</p>
             <ul><li>Advisory enablement</li><li>Workflow automation</li><li>Data-led decisioning</li></ul>
           </article>
-          <article class="expertise-card">
+          <article class="expertise-card tilt">
             <span class="card-number">04</span>
             <div class="card-icon blocks" aria-hidden="true"><span></span><span></span><span></span></div>
             <h3>Real Estate</h3>
@@ -158,11 +160,11 @@
             <p>Our experience spans customer-facing operations, high-consideration sales and complex service environments across Asia.</p>
           </div>
           <div class="work-grid">
-            <article class="work-card work-card-large">
+            <article class="work-card work-card-large tilt">
               <img src="assets/images/hospitality.png" alt="Contemporary hospitality space" width="768" height="538" loading="lazy">
               <div class="work-overlay"><p>Hospitality &amp; experience</p><h3>Connect every decision to the guest experience.</h3><span>Operations · Customer intelligence · Growth</span></div>
             </article>
-            <article class="work-card work-card-small">
+            <article class="work-card work-card-small tilt">
               <img src="assets/images/passion-led.jpg" alt="Passion led us here message set in pavement" width="606" height="424" loading="lazy">
               <div class="work-overlay"><p>Transformation &amp; teams</p><h3>Make change meaningful to the people delivering it.</h3><span>Strategy · Adoption · Capability</span></div>
             </article>
@@ -235,5 +237,6 @@
       <div class="container footer-bottom"><p>© <span id="year">2026</span> Bricks Marketing LLP</p><a href="mailto:hi@bricksmarketing.com">hi@bricksmarketing.com</a><a href="#top">Back to top <span aria-hidden="true">&#8593;</span></a></div>
     </footer>
     <script src="script.js" defer></script>
+    <script src="scene3d.js" type="module"></script>
   </body>
 </html>

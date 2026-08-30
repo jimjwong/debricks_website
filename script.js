@@ -36,3 +36,59 @@ contactForm?.addEventListener('submit', (event) => {
 
 const year = document.querySelector('#year');
 if (year) year.textContent = String(new Date().getFullYear());
+
+/* ---- Pointer-reactive 3D tilt -------------------------------------------- */
+const tiltables = document.querySelectorAll('.tilt');
+const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+if (tiltables.length && !noMotion.matches) {
+  tiltables.forEach((card) => {
+    const strength = Number(card.dataset.tilt || 9);
+    let rect = null;
+    let tiltX = 0;
+    let tiltY = 0;
+    let raf = null;
+
+    // The rect is cached on enter and refreshed on scroll/resize rather than
+    // read per move, so pointermove never forces a synchronous layout.
+    const measure = () => { rect = card.getBoundingClientRect(); };
+    const invalidate = () => { if (rect) measure(); };
+
+    const paint = () => {
+      raf = null;
+      card.style.transform =
+        `perspective(1000px) rotateY(${tiltX}deg) rotateX(${tiltY}deg) translateY(-4px) scale(1.012)`;
+    };
+
+    card.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'touch') return;
+      measure();
+    });
+
+    card.addEventListener('pointermove', (event) => {
+      // Mouse and pen only — a finger dragging past a card should not tilt it.
+      if (event.pointerType === 'touch') return;
+      if (!rect) measure();
+
+      // Normalise at event time; a deferred frame must not re-measure against
+      // a layout that has since changed.
+      tiltX = ((event.clientX - rect.left) / rect.width - 0.5) * strength;
+      tiltY = -((event.clientY - rect.top) / rect.height - 0.5) * strength;
+
+      card.classList.add('is-tilting');
+      if (raf === null) raf = requestAnimationFrame(paint);
+    }, { passive: true });
+
+    const reset = () => {
+      if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+      rect = null;
+      card.classList.remove('is-tilting');
+      card.style.transform = '';
+    };
+
+    card.addEventListener('pointerleave', reset);
+    card.addEventListener('pointercancel', reset);
+    window.addEventListener('scroll', invalidate, { passive: true });
+    window.addEventListener('resize', invalidate);
+  });
+}
