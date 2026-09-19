@@ -1,6 +1,6 @@
-# Bricks website
+# deBricks website
 
-A refreshed, responsive static website for Bricks Marketing LLP.
+A refreshed, responsive static website for deBricks LLP.
 
 - `index.html` contains the page content.
 - `styles.css` contains the visual design and responsive layouts.
@@ -17,8 +17,8 @@ Website repository for **bricksmarketing.com** and **debricks.com**.
 
 This repo holds the source for two related sites:
 
-- **bricksmarketing.com** — Bricks Marketing
-- **debricks.com** — Debricks
+- **bricksmarketing.com** — deBricks
+- **debricks.com** — deBricks
 
 ## Getting Started
 

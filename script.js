@@ -31,7 +31,7 @@ contactForm?.addEventListener('submit', (event) => {
   const message = String(data.get('message') || '').trim();
   const subject = encodeURIComponent(`Website enquiry from ${name}${company ? ` at ${company}` : ''}`);
   const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}${company ? `\nCompany: ${company}` : ''}\n\n${message}`);
-  window.location.href = `mailto:hi@bricksmarketing.com?subject=${subject}&body=${body}`;
+  window.location.href = `mailto:hi@debricks.com?subject=${subject}&body=${body}`;
 });
 
 const year = document.querySelector('#year');
