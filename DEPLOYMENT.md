@@ -10,7 +10,7 @@ This website is fully static and does not need a database, server process, or th
 4. Confirm that `index.html` and `.htaccess` are directly inside `public_html`.
 5. Open the domain and test the navigation and contact button.
 
-The contact form opens the visitor's email application with their message addressed to `hi@debricks.com`, so no server-side form setup is required.
+The contact form opens WhatsApp through `api.whatsapp.com` with the visitor's enquiry details addressed to `+65 8849 4321`, so no server-side form setup is required.
 
 ## Updating the site later
 

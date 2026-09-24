@@ -24,14 +24,24 @@ mobileNav?.querySelectorAll('a').forEach((link) => {
 
 contactForm?.addEventListener('submit', (event) => {
   event.preventDefault();
+
+  if (!contactForm.reportValidity()) return;
+
   const data = new FormData(contactForm);
   const name = String(data.get('name') || '').trim();
   const email = String(data.get('email') || '').trim();
   const company = String(data.get('company') || '').trim();
   const message = String(data.get('message') || '').trim();
-  const subject = encodeURIComponent(`Website enquiry from ${name}${company ? ` at ${company}` : ''}`);
-  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}${company ? `\nCompany: ${company}` : ''}\n\n${message}`);
-  window.location.href = `mailto:hi@debricks.com?subject=${subject}&body=${body}`;
+  const whatsappMessage = [
+    'Hi deBricks, I would like to find out more about',
+    '',
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Company: ${company}`,
+    `Message: ${message}`,
+  ].join('\n');
+
+  window.location.href = `https://api.whatsapp.com/send?phone=6588494321&text=${encodeURIComponent(whatsappMessage)}`;
 });
 
 const year = document.querySelector('#year');
